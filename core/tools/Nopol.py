@@ -11,7 +11,7 @@ class Nopol(Tool):
     """docstring for Nopol"""
     def __init__(self, name):
         super(Nopol, self).__init__(name, "nopol")
-        self.solverPath = self.data["solverPath"].replace("<defects4j-repair>", conf.defects4jRepairRoot)
+        self.solverPath = os.path.join(conf.defects4jRepairRoot, self.data["solverPath"].replace("<defects4j-repair>", conf.defects4jRepairRoot))
         self.solver = self.data["solver"]
 
     def runNopol(self, project, id, mode="repair", type="condition", synthesis="smt", oracle="angelic"):
@@ -37,10 +37,10 @@ class Nopol(Tool):
         
         cmd = 'cd ' + workdir +  ';'
         cmd += 'export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8;'
-        cmd += 'TZ="America/New_York"; export TZ'
+        cmd += 'TZ="America/New_York"; export TZ;'
         cmd += 'export PATH="' + conf.javaHome + ':$PATH";'
         cmd += 'cp -r ' + conf.z3Root + ' lib/z3;'
-        cmd += 'time java %s -cp %s:%s/../lib/tools.jar %s' % (conf.javaArgs, self.jar, conf.javaHome, self.main)
+        cmd += 'java %s -cp %s:%s/../lib/tools.jar %s' % (conf.javaArgs, self.jar, conf.javaHome, self.main)
         cmd += ' --mode ' + mode
         cmd += ' --type ' + type
         cmd += ' --oracle ' + oracle
@@ -52,7 +52,7 @@ class Nopol(Tool):
         cmd += ' --classpath ' + classpath + ';'
         cmd += 'echo "\n\nNode: `hostname`\n";'
         cmd += 'echo "\nDate: `date`\n";'
-        cmd += 'rm -rf ' + workdir +  ';'
+        #cmd += 'rm -rf ' + workdir +  ';'
         logPath = os.path.join(project.logPath, str(id), self.name, "stdout.log.full")
         if not os.path.exists(os.path.dirname(logPath)):
             os.makedirs(os.path.dirname(logPath))

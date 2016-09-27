@@ -1,8 +1,8 @@
 {
 	"name": "Nopol",
-	"version": "0.0.3",
+	"version": "0.2-SNAPSHOT",
 	"solver": "z3",
-	"solverPath": "<defects4j-repair>/libs/z3/z3",
-	"jar": "<defects4j-repair>/libs/nopol.jar",
+	"solverPath": "nopol/nopol/lib/z3/z3_for_linux",
+	"jar": "nopol/nopol/target/nopol-0.2-SNAPSHOT-jar-with-dependencies.jar",
 	"main": "fr.inria.lille.repair.Main"
 }
